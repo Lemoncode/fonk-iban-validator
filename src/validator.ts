@@ -1,6 +1,7 @@
-import { FieldValidationFunctionSync } from '@lemoncode/fonk';
-import { CustomValidatorArgs } from './validator.model';
-import { isDefined, buildCustomMessage } from './validator.business';
+import {
+  FieldValidationFunctionSync,
+  parseMessageWithCustomArgs,
+} from '@lemoncode/fonk';
 
 // TODO: Add validator type
 const VALIDATOR_TYPE = '';
@@ -9,10 +10,10 @@ const VALIDATOR_TYPE = '';
 let defaultMessage = '';
 export const setErrorMessage = message => (defaultMessage = message);
 
-export const validator: FieldValidationFunctionSync<
-  CustomValidatorArgs
-> = fieldValidatorArgs => {
-  const { value, message = defaultMessage } = fieldValidatorArgs;
+const isDefined = value => value !== void 0 && value !== null && value !== '';
+
+export const validator: FieldValidationFunctionSync = fieldValidatorArgs => {
+  const { value, message = defaultMessage, customArgs } = fieldValidatorArgs;
 
   // TODO: Add validator
   const succeeded = !isDefined(value) || ...;
@@ -21,7 +22,11 @@ export const validator: FieldValidationFunctionSync<
     succeeded,
     message: succeeded
       ? ''
-      : buildCustomMessage((message as string) || defaultMessage, args),
+      : // TODO: Use if it has custom args
+        parseMessageWithCustomArgs(
+          (message as string) || defaultMessage,
+          customArgs
+        ),
     type: VALIDATOR_TYPE,
   };
 };
