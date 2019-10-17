@@ -16,7 +16,7 @@ We have the following form model:
 
 ```
 const myFormValues = {
-  product : 'shoes',
+  product: 'shoes',
   price: 20,
 }
 ```
@@ -27,7 +27,9 @@ We can add a iban validation to the myFormValues
 import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema = {
-  price: [iban.validator],
+  field: {
+    price: [iban.validator],
+  },
 };
 ```
 
@@ -47,12 +49,14 @@ iban.setErrorMessage('El campo debe de ser numérico');
 import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema = {
-  price: [
-    {
-      validator: iban.validator,
-      message: 'Error message only updated for the validation schema',
-    },
-  ],
+  field: {
+    price: [
+      {
+        validator: iban.validator,
+        message: 'Error message only updated for the validation schema',
+      },
+    ],
+  },
 };
 ```
 
