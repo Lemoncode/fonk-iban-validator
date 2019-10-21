@@ -150,6 +150,34 @@ export const getLengthCountry = (input: string): number => {
       return 24;
     case 'UA':
       return 29;
+    case 'BI':
+      return 16;
+    case 'DZ':
+      return 24;
+    case 'AO':
+      return 25;
+    case 'BJ':
+      return 28;
+    case 'BF':
+      return 27;
+    case 'CM':
+      return 27;
+    case 'CV':
+      return 25;
+    case 'CR':
+      return 22;
+    case 'IR':
+      return 26;
+    case 'CI':
+      return 28;
+    case 'MG':
+      return 27;
+    case 'ML':
+      return 28;
+    case 'MZ':
+      return 25;
+    case 'SN':
+      return 28;
     default:
       return 0;
   }
