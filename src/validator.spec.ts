@@ -1,4 +1,5 @@
 import { validator, setErrorMessage } from './validator';
+import { getLengthCountry } from './switchCountry';
 
 describe('fonk-iban-validator specs', () => {
   it('should return succeeded=false and an error message validation when it feeds value equals undefined string', () => {
@@ -14,6 +15,46 @@ describe('fonk-iban-validator specs', () => {
       message: 'Invalid IBAN',
       type: 'IBAN',
     });
+  });
+  it('should return 0 if country code does not exists', () => {
+    // Arrange
+    const value = 'pw';
+
+    // Act
+    const result = getLengthCountry(value);
+
+    // Assert
+    expect(result).toEqual(0);
+  });
+  it('should return 0 if country code is null', () => {
+    // Arrange
+    const value = null;
+
+    // Act
+    const result = getLengthCountry(value);
+
+    // Assert
+    expect(result).toEqual(0);
+  });
+  it('should return 28 if country code is AL', () => {
+    // Arrange
+    const value = 'AL';
+
+    // Act
+    const result = getLengthCountry(value);
+
+    // Assert
+    expect(result).toEqual(28);
+  });
+  it('should return 0 if country code is undefined', () => {
+    // Arrange
+    const value = undefined;
+
+    // Act
+    const result = getLengthCountry(value);
+
+    // Assert
+    expect(result).toEqual(0);
   });
   it('should return succeeded=false and an error message validation when it feeds value equals empty string', () => {
     // Arrange
@@ -77,7 +118,7 @@ describe('fonk-iban-validator specs', () => {
 
   it("should return Succeded==true and message='' when valid IBAN", () => {
     // Arrange
-    const value = 'ES91 2100 0418 4502 0005 1332';
+    const value = 'ES912 100041845020005 1332';
 
     // Act
     const result = validator({ value });
