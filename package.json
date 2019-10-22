@@ -24,7 +24,7 @@
   "bundlesize": [
     {
       "path": "./dist/**/*.js",
-      "maxSize": "1kB"
+      "maxSize": "2kB"
     }
   ],
   "repository": {
