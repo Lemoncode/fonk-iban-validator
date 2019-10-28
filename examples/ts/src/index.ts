@@ -1,7 +1,4 @@
-import {
-  ValidationSchema,
-  createFormValidation,
-} from '@lemoncode/fonk';
+import { ValidationSchema, createFormValidation } from '@lemoncode/fonk';
 import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema: ValidationSchema = {
@@ -12,17 +9,16 @@ const validationSchema: ValidationSchema = {
 
 const formValidation = createFormValidation(validationSchema);
 
-// TODO: Update example values 'test' and/or 10 if needed
 Promise.all([
-  formValidation.validateField('myField', 'test'),
-  formValidation.validateField('myField', 10),
+  formValidation.validateField('myField', 'ML03D00890170001002120000347'),
+  formValidation.validateField('myField', 'ML03D00890170001002120000447'),
 ]).then(([failedResult, succeededResult]) => {
   document.getElementById('app').innerHTML = `
 <div style="flex-grow: 1;margin-left:2rem;">
   <h2>Example with failed result:</h2>
 
 <pre>
-  formValidation.validateField('myField', 'test')
+  formValidation.validateField('myField', 'ML03D00890170001002120000347')
 </pre>
 
   <h3>Result: </h3>
@@ -35,7 +31,7 @@ ${JSON.stringify(failedResult, null, 2)}
   <h2>Example with succeeded result:</h2>
 
 <pre>
-formValidation.validateField('myField', 10)
+formValidation.validateField('myField', 'ML03D00890170001002120000447')
 </pre>
 
   <h3>Result: </h3>
