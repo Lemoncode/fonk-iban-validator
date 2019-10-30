@@ -1,6 +1,6 @@
 {
   "name": "@lemoncode/fonk-iban-validator",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "This is a [fonk](https://github.com/Lemoncode/fonk) microlibrary that brings validation capabilities to validate if a field of a form is a valid IBAN",
   "main": "dist/@lemoncode/fonk-iban-validator.cjs.js",
   "module": "dist/@lemoncode/fonk-iban-validator.esm.js",
