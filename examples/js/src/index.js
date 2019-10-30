@@ -3,22 +3,22 @@ import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema = {
   field: {
-    myField: [iban.validator],
+    account: [iban.validator],
   },
 };
 
 const formValidation = createFormValidation(validationSchema);
 
 Promise.all([
-  formValidation.validateField('myField', 'ML03D00890170001002120000347'),
-  formValidation.validateField('myField', 'ML03D00890170001002120000447'),
+  formValidation.validateField('account', 'ES7912345678901234567890'),
+  formValidation.validateField('account', 'ES7921000813610123456789'),
 ]).then(([failedResult, succeededResult]) => {
   document.getElementById('app').innerHTML = `
 <div style="flex-grow: 1;margin-left:2rem;">
   <h2>Example with failed result:</h2>
 
 <pre>
-formValidation.validateField('myField', 'ML03D00890170001002120000347')
+formValidation.validateField('account', 'ES7912345678901234567890')
 </pre>
 
   <h3>Result: </h3>
@@ -31,7 +31,7 @@ ${JSON.stringify(failedResult, null, 2)}
   <h2>Example with succeeded result:</h2>
 
 <pre>
-formValidation.validateField('myField', 'ML03D00890170001002120000447')
+formValidation.validateField('account', 'ES7921000813610123456789')
 </pre>
 
   <h3>Result: </h3>

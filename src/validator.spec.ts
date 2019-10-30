@@ -1,62 +1,40 @@
 import { validator, setErrorMessage } from './validator';
-import { getLengthCountry } from './switchCountry';
+
+const VALIDATOR_TYPE = 'IBAN';
+const defaultMessage = 'Invalid IBAN';
 
 describe('fonk-iban-validator specs', () => {
-  it('should return succeeded=false and an error message validation when it feeds value equals undefined string', () => {
+  it('should return succeeded validation when it feeds value equals undefined', () => {
     // Arrange
-    const value = undefined;
+    const value = void 0;
 
     // Act
     const result = validator({ value });
 
     // Assert
     expect(result).toEqual({
-      succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      succeeded: true,
+      message: '',
+      type: VALIDATOR_TYPE,
     });
   });
-  it('should return 0 if country code does not exists', () => {
-    // Arrange
-    const value = 'pw';
 
-    // Act
-    const result = getLengthCountry(value);
-
-    // Assert
-    expect(result).toEqual(0);
-  });
-  it('should return 0 if country code is null', () => {
+  it('should return succeeded validation when it feeds value equals null', () => {
     // Arrange
     const value = null;
 
     // Act
-    const result = getLengthCountry(value);
+    const result = validator({ value });
 
     // Assert
-    expect(result).toEqual(0);
+    expect(result).toEqual({
+      succeeded: true,
+      message: '',
+      type: VALIDATOR_TYPE,
+    });
   });
-  it('should return 28 if country code is AL', () => {
-    // Arrange
-    const value = 'AL';
 
-    // Act
-    const result = getLengthCountry(value);
-
-    // Assert
-    expect(result).toEqual(28);
-  });
-  it('should return 0 if country code is undefined', () => {
-    // Arrange
-    const value = undefined;
-
-    // Act
-    const result = getLengthCountry(value);
-
-    // Assert
-    expect(result).toEqual(0);
-  });
-  it('should return succeeded=false and an error message validation when it feeds value equals empty string', () => {
+  it('should return succeeded validation when it feeds value equals empty string', () => {
     // Arrange
     const value = '';
 
@@ -65,9 +43,9 @@ describe('fonk-iban-validator specs', () => {
 
     // Assert
     expect(result).toEqual({
-      succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      succeeded: true,
+      message: '',
+      type: VALIDATOR_TYPE,
     });
   });
 
@@ -83,40 +61,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: false,
       message: 'other message',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('should return Invalid IBAN message and succeded = false when null value', () => {
-    // Arrange
-    const value = null;
-
-    // Act
-    const result = validator({ value });
-
-    // Assert
-    expect(result).toEqual({
-      succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
-    });
-  });
-  it('should return Invalid IBAN message and succeded = false when invalid IBAN', () => {
-    // Arrange
-    const value = 'test';
-
-    // Act
-    const result = validator({ value });
-
-    // Assert
-    expect(result).toEqual({
-      succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
-    });
-  });
-
-  it("should return Succeded==true and message='' when valid IBAN", () => {
+  it('should return succeded validation when it feeds value equals valid IBAN with spaces', () => {
     // Arrange
     const value = 'ES912 100041845020005 1332';
 
@@ -127,11 +76,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a valid IBAN (Albania) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Albania)', () => {
     // Arrange
     const value = 'AL47212110090000000235698741';
 
@@ -142,11 +91,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Albania) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Albania)', () => {
     // Arrange
     const value = 'AL47212110190000000235698741';
 
@@ -156,13 +105,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Algeria
-  it('Should validate a valid IBAN (Algeria) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Algeria)', () => {
     // Arrange
     const value = 'DZ4000400174401001050486';
 
@@ -173,11 +122,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Algeria) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Algeria)', () => {
     // Arrange
     const value = 'DZ4001400174401001050486';
 
@@ -187,13 +136,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Angola
-  it('Should validate a valid IBAN (Angola) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Angola)', () => {
     // Arrange
     const value = 'AO06000600000100037131174';
 
@@ -204,11 +153,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Angola) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Angola)', () => {
     // Arrange
     const value = 'AO06000600200100037131174';
 
@@ -218,13 +167,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Andorra
-  it('Should validate a valid IBAN (Andorra) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Andorra)', () => {
     // Arrange
     const value = 'AD1200012030200359100100';
 
@@ -235,11 +184,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Andorra) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Andorra)', () => {
     // Arrange
     const value = 'AD1220012030200359100100';
 
@@ -249,13 +198,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Austria
-  it('Should validate a valid IBAN (Austria) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Austria)', () => {
     // Arrange
     const value = 'AT611904300234573201';
 
@@ -266,11 +215,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Austria) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Austria)', () => {
     // Arrange
     const value = 'AT611904300234573501';
 
@@ -280,13 +229,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   //  ** Azerbaijan
-  it('Should validate a valid IBAN (Azerbaijan) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Azerbaijan)', () => {
     // Arrange
     const value = 'AZ21NABZ00000000137010001944';
 
@@ -297,11 +246,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Azerbaijan) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Azerbaijan)', () => {
     // Arrange
     const value = 'AZ21NABZ00000000137010001344';
 
@@ -311,13 +260,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Bahrain
-  it('Should validate a valid IBAN (Bahrain) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Bahrain)', () => {
     // Arrange
     const value = 'BH29BMAG1299123456BH00';
 
@@ -328,11 +277,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Bahrain) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Bahrain)', () => {
     // Arrange
     const value = 'BH29B3AG1299123456BH00';
 
@@ -342,13 +291,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Bosnia and Herzegovina
-  it('Should validate a valid IBAN (Bosnia and Herzegovina) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Bosnia and Herzegovina)', () => {
     // Arrange
     const value = 'BA391290079401028494';
 
@@ -359,11 +308,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Bosnia and Herzegovina) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Bosnia and Herzegovina)', () => {
     // Arrange
     const value = 'BA391290039401028494';
 
@@ -373,13 +322,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Belgium
-  it('Should validate a valid IBAN (Belgium) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Belgium)', () => {
     // Arrange
     const value = 'BE68539007547034';
 
@@ -390,11 +339,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Belgium) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Belgium)', () => {
     // Arrange
     const value = 'BE68539007544034';
 
@@ -404,13 +353,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Benin
-  it('Should validate a valid IBAN (Benin) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Benin)', () => {
     // Arrange
     const value = 'BJ11B00610100400271101192591';
 
@@ -421,11 +370,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Benin) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Benin)', () => {
     // Arrange
     const value = 'BJ11B00610100403271101192591';
 
@@ -435,13 +384,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Brazil
-  it('Should validate a valid IBAN (Brazil) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Brazil)', () => {
     // Arrange
     const value = 'BR9700360305000010009795493P1';
 
@@ -452,11 +401,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Brazil) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Brazil)', () => {
     // Arrange
     const value = 'BR9700360303000010009795493P1';
 
@@ -466,13 +415,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Burkina Faso
-  it('Should validate a valid IBAN (Burkina Faso) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Burkina Faso)', () => {
     // Arrange
     const value = 'BF1030134020015400945000643';
 
@@ -483,11 +432,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Burkina Faso) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Burkina Faso)', () => {
     // Arrange
     const value = 'BF1030134020015430945000643';
 
@@ -497,13 +446,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Bulgaria
-  it('Should validate a valid IBAN (Bulgaria) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Bulgaria)', () => {
     // Arrange
     const value = 'BG80BNBG96611020345678';
 
@@ -514,11 +463,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Bulgaria) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Bulgaria)', () => {
     // Arrange
     const value = 'BG80BNBG96612020345678';
 
@@ -528,13 +477,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Burundi
-  it('Should validate a valid IBAN (Burundi) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Burundi)', () => {
     // Arrange
     const value = 'BI43201011067444';
 
@@ -545,11 +494,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Burundi) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Burundi)', () => {
     // Arrange
     const value = 'BI43201013067444';
 
@@ -559,13 +508,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Cameroon
-  it('Should validate a valid IBAN (Cameroon) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Cameroon)', () => {
     // Arrange
     const value = 'CM2110003001000500000605306';
 
@@ -576,11 +525,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Cameroon) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Cameroon)', () => {
     // Arrange
     const value = 'CM2110003001000200000605306';
 
@@ -590,13 +539,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Cape Verde
-  it('Should validate a valid IBAN (Cape Verde) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Cape Verde)', () => {
     // Arrange
     const value = 'CV64000300004547069110176';
 
@@ -607,11 +556,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Cape Verde) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Cape Verde)', () => {
     // Arrange
     const value = 'CV64000300004547069110276';
 
@@ -621,13 +570,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Costa Rica
-  it('Should validate a valid IBAN (Costa Rica) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Costa Rica)', () => {
     // Arrange
     const value = 'CR05 0152 0200 1026 2840 66';
 
@@ -638,11 +587,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Costa Rica) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Costa Rica)', () => {
     // Arrange
     const value = 'CR0515202001026274066';
 
@@ -652,13 +601,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Croatia
-  it('Should validate a valid IBAN (Croatia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Croatia)', () => {
     // Arrange
     const value = 'HR1210010051863000160';
 
@@ -669,11 +618,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Croatia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Croatia)', () => {
     // Arrange
     const value = 'HR1210010051862000160';
 
@@ -683,13 +632,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Cyprus
-  it('Should validate a valid IBAN (Cyprus) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Cyprus)', () => {
     // Arrange
     const value = 'CY17002001280000001200527600';
 
@@ -700,11 +649,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Cyprus) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Cyprus)', () => {
     // Arrange
     const value = 'CY17002001280000001200527500';
 
@@ -714,13 +663,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Czech Republic
-  it('Should validate a valid IBAN (Cyprus) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Cyprus)', () => {
     // Arrange
     const value = 'CZ6508000000192000145399';
 
@@ -731,11 +680,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Cyprus) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Cyprus)', () => {
     // Arrange
     const value = 'CZ6508000000192000145299';
 
@@ -745,13 +694,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Denmark
-  it('Should validate a valid IBAN (Denmark) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Denmark)', () => {
     // Arrange
     const value = 'DK5000400440116243';
 
@@ -762,11 +711,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Denmark) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Denmark)', () => {
     // Arrange
     const value = 'DK5000400440113243';
 
@@ -776,13 +725,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Dominican Republic
-  it('Should validate a valid IBAN (Dominican Republic) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Dominican Republic)', () => {
     // Arrange
     const value = 'DO28BAGR00000001212453611324';
 
@@ -793,11 +742,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Dominican Republic) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Dominican Republic)', () => {
     // Arrange
     const value = 'DO28BAGR00000001312453611324';
 
@@ -807,13 +756,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** East Timor
-  it('Should validate a valid IBAN (East Timor) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (East Timor)', () => {
     // Arrange
     const value = 'TL380080012345678910157';
 
@@ -824,11 +773,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (East Timor) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (East Timor)', () => {
     // Arrange
     const value = 'TL380080012345478910157';
 
@@ -838,13 +787,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Estonia
-  it('Should validate a valid IBAN (Estonia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Estonia)', () => {
     // Arrange
     const value = 'EE382200221020145685';
 
@@ -855,11 +804,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Estonia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Estonia)', () => {
     // Arrange
     const value = 'EE482200221020145685';
 
@@ -869,13 +818,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Faroe Islands
-  it('Should validate a valid IBAN (Faroe Islands) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Faroe Islands)', () => {
     // Arrange
     const value = 'FO1464600009692713';
 
@@ -886,11 +835,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Faroe Islands) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Faroe Islands)', () => {
     // Arrange
     const value = 'FO1464600009592713';
 
@@ -900,13 +849,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Finland
-  it('Should validate a valid IBAN (Finland) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Finland)', () => {
     // Arrange
     const value = 'FI2112345600000785';
 
@@ -917,11 +866,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Finland) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Finland)', () => {
     // Arrange
     const value = 'FI2312345600000785';
 
@@ -931,13 +880,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** France
-  it('Should validate a valid IBAN (France) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (France)', () => {
     // Arrange
     const value = 'FR1420041010050500013M02606';
 
@@ -948,11 +897,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (France) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (France)', () => {
     // Arrange
     const value = 'FR1450041010050500013M02606';
 
@@ -962,13 +911,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Guatemala
-  it('Should validate a valid IBAN (Guatemala) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Guatemala)', () => {
     // Arrange
     const value = 'GT82TRAJ01020000001210029690';
 
@@ -979,11 +928,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Guatemala) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Guatemala)', () => {
     // Arrange
     const value = 'GT82TRAJ01020000001210028690';
 
@@ -993,13 +942,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Georgia
-  it('Should validate a valid IBAN (Georgia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Georgia)', () => {
     // Arrange
     const value = 'GE29NB0000000101904917';
 
@@ -1010,11 +959,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Georgia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Georgia)', () => {
     // Arrange
     const value = 'GE29NB0000000101904817';
 
@@ -1024,13 +973,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Germany
-  it('Should validate a valid IBAN (Germany) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Germany)', () => {
     // Arrange
     const value = 'DE89370400440532013000';
 
@@ -1041,11 +990,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Germany) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Germany)', () => {
     // Arrange
     const value = 'DE89370400430532013000';
 
@@ -1055,13 +1004,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Gibraltar
-  it('Should validate a valid IBAN (Gibraltar) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Gibraltar)', () => {
     // Arrange
     const value = 'GI75NWBK000000007099453';
 
@@ -1072,11 +1021,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Gibraltar) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Gibraltar)', () => {
     // Arrange
     const value = 'GI75NWIK000000007099453';
 
@@ -1086,13 +1035,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Greece
-  it('Should validate a valid IBAN (Greece) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Greece)', () => {
     // Arrange
     const value = 'GR1601101250000000012300695';
 
@@ -1103,11 +1052,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Greece) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Greece)', () => {
     // Arrange
     const value = 'GR1601101250000000012300694';
 
@@ -1117,13 +1066,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Greenland
-  it('Should validate a valid IBAN (Greenland) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Greenland)', () => {
     // Arrange
     const value = 'GL8964710001000206';
 
@@ -1134,11 +1083,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Greenland) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Greenland)', () => {
     // Arrange
     const value = 'GL8964710002000206';
 
@@ -1148,13 +1097,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Hungary
-  it('Should validate a valid IBAN (Hungary) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Hungary)', () => {
     // Arrange
     const value = 'HU42117730161111101800000000';
 
@@ -1165,11 +1114,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Hungary) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Hungary)', () => {
     // Arrange
     const value = 'HU42117730161111101800000010';
 
@@ -1179,13 +1128,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Iceland
-  it('Should validate a valid IBAN (Iceland) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Iceland)', () => {
     // Arrange
     const value = 'IS140159260076545510730339';
 
@@ -1196,11 +1145,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Iceland) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Iceland)', () => {
     // Arrange
     const value = 'IS140159260076545510730334';
 
@@ -1210,13 +1159,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Iran
-  it('Should validate a valid IBAN (Iran) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Iran)', () => {
     // Arrange
     const value = 'IR580540105180021273113007';
 
@@ -1227,11 +1176,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Iran) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Iran)', () => {
     // Arrange
     const value = 'IR580540105180021473113007';
 
@@ -1241,13 +1190,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Ireland
-  it('Should validate a valid IBAN (Iran) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Iran)', () => {
     // Arrange
     const value = 'IE29AIBK93115212345678';
 
@@ -1258,11 +1207,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Iran) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Iran)', () => {
     // Arrange
     const value = 'IE29AIBY93115212345678';
 
@@ -1272,13 +1221,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Israel
-  it('Should validate a valid IBAN (Israel) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Israel)', () => {
     // Arrange
     const value = 'IL620108000000099999999';
 
@@ -1289,11 +1238,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Israel) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Israel)', () => {
     // Arrange
     const value = 'IL620108000000099989999';
 
@@ -1303,13 +1252,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Italy
-  it('Should validate a valid IBAN (Italy) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Italy)', () => {
     // Arrange
     const value = 'IT60X0542811101000000123456';
 
@@ -1320,11 +1269,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Italy) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Italy)', () => {
     // Arrange
     const value = 'IT60X6542811101000000123456';
 
@@ -1334,13 +1283,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Ivory Coast
-  it('Should validate a valid IBAN (Ivory Coast) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Ivory Coast)', () => {
     // Arrange
     const value = 'CI05A00060174100178530011852';
 
@@ -1351,11 +1300,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Ivory Coast) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Ivory Coast)', () => {
     // Arrange
     const value = 'CI05A00060174100177530011852';
 
@@ -1365,13 +1314,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Jordan
-  it('Should validate a valid IBAN (Jordan) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Jordan)', () => {
     // Arrange
     const value = 'JO94CBJO0010000000000131000302';
 
@@ -1382,11 +1331,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Jordan) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Jordan)', () => {
     // Arrange
     const value = 'JO94CBJO0012000000000131000302';
 
@@ -1396,13 +1345,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Kazakhstan
-  it('Should validate a valid IBAN (Kazakhstan) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Kazakhstan)', () => {
     // Arrange
     const value = 'KZ176010251000042993';
 
@@ -1413,11 +1362,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Kazakhstan) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Kazakhstan)', () => {
     // Arrange
     const value = 'KZ176010251000042193';
 
@@ -1427,13 +1376,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Kuwait
-  it('Should validate a valid IBAN (Kuwait) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Kuwait)', () => {
     // Arrange
     const value = 'KW74NBOK0000000000001000372151';
 
@@ -1444,11 +1393,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Kuwait) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Kuwait)', () => {
     // Arrange
     const value = 'KW74NBOE0000000000001000372151';
 
@@ -1458,13 +1407,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Latvia
-  it('Should validate a valid IBAN (Latvia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Latvia)', () => {
     // Arrange
     const value = 'LV80BANK0000435195001';
 
@@ -1475,11 +1424,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Latvia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Latvia)', () => {
     // Arrange
     const value = 'LV80BANK0000425195001';
 
@@ -1489,13 +1438,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Lebanon
-  it('Should validate a valid IBAN (Lebanon) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Lebanon)', () => {
     // Arrange
     const value = 'LB30099900000001001925579115';
 
@@ -1506,11 +1455,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Lebanon) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Lebanon)', () => {
     // Arrange
     const value = 'LB30099900000001001925579114';
 
@@ -1520,13 +1469,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Liechtenstein
-  it('Should validate a valid IBAN (Liechtenstein) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Liechtenstein)', () => {
     // Arrange
     const value = 'LI21088100002324013AA';
 
@@ -1537,11 +1486,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Liechtenstein) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Liechtenstein)', () => {
     // Arrange
     const value = 'LI21088100002324013BA';
 
@@ -1551,13 +1500,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Lithuania
-  it('Should validate a valid IBAN (Lithuania) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Lithuania)', () => {
     // Arrange
     const value = 'LT121000011101001000';
 
@@ -1568,11 +1517,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Lithuania) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Lithuania)', () => {
     // Arrange
     const value = 'LT121000011101002000';
 
@@ -1582,13 +1531,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Luxembourg
-  it('Should validate a valid IBAN (Luxembourg) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Luxembourg)', () => {
     // Arrange
     const value = 'LU280019400644750000';
 
@@ -1599,11 +1548,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Luxembourg) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Luxembourg)', () => {
     // Arrange
     const value = 'LU280019400634750000';
 
@@ -1613,13 +1562,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Macedonia
-  it('Should validate a valid IBAN (Macedonia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Macedonia)', () => {
     // Arrange
     const value = 'MK07300000000042425';
 
@@ -1630,11 +1579,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Macedonia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Macedonia)', () => {
     // Arrange
     const value = 'MK06300000000042425';
 
@@ -1644,13 +1593,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Madagascar
-  it('Should validate a valid IBAN (Madagascar) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Madagascar)', () => {
     // Arrange
     const value = 'MG4600005030010101914016056';
 
@@ -1661,11 +1610,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Madagascar) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Madagascar)', () => {
     // Arrange
     const value = 'MG4600005030010101814016056';
 
@@ -1675,13 +1624,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Malta
-  it('Should validate a valid IBAN (Malta) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Malta)', () => {
     // Arrange
     const value = 'MT84MALT011000012345MTLCAST001S';
 
@@ -1692,11 +1641,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Malta) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Malta)', () => {
     // Arrange
     const value = 'MT84MALT011000012345YTLCAST001S';
 
@@ -1706,13 +1655,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Mauritania
-  it('Should validate a valid IBAN (Mauritania) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Mauritania)', () => {
     // Arrange
     const value = 'MR1300012000010000002037372';
 
@@ -1723,11 +1672,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Mauritania) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Mauritania)', () => {
     // Arrange
     const value = 'MR1300012001010000002037372';
 
@@ -1737,13 +1686,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Mauritius
-  it('Should validate a valid IBAN (Mauritius) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Mauritius)', () => {
     // Arrange
     const value = 'MU17BOMM0101101030300200000MUR';
 
@@ -1754,11 +1703,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Mauritius) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Mauritius)', () => {
     // Arrange
     const value = 'MU17BOMM0101101030300200010MUR';
 
@@ -1768,13 +1717,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Mali
-  it('Should validate a valid IBAN (Mali) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Mali)', () => {
     // Arrange
     const value = 'ML03D00890170001002120000447';
 
@@ -1785,11 +1734,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Mali) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Mali)', () => {
     // Arrange
     const value = 'ML03D00890170001002120000347';
 
@@ -1799,13 +1748,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Moldova
-  it('Should validate a valid IBAN (Moldova) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Moldova)', () => {
     // Arrange
     const value = 'MD24AG000225100013104168';
 
@@ -1816,11 +1765,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Moldova) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Moldova)', () => {
     // Arrange
     const value = 'MD24AG000224100013104168';
 
@@ -1830,13 +1779,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Monaco
-  it('Should validate a valid IBAN (Monaco) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Monaco)', () => {
     // Arrange
     const value = 'MC5813488000010051108001292';
 
@@ -1847,11 +1796,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Monaco) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Monaco)', () => {
     // Arrange
     const value = 'MC5813478000010051108001292';
 
@@ -1861,13 +1810,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Montenegro
-  it('Should validate a valid IBAN (Montenegro) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Montenegro)', () => {
     // Arrange
     const value = 'ME25505000012345678951';
 
@@ -1878,11 +1827,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Montenegro) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Montenegro)', () => {
     // Arrange
     const value = 'ME24505000012345678951';
 
@@ -1892,13 +1841,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Mozambique
-  it('Should validate a valid IBAN (Mozambique) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Mozambique)', () => {
     // Arrange
     const value = 'MZ59000100000011834194157';
 
@@ -1909,11 +1858,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Mozambique) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Mozambique)', () => {
     // Arrange
     const value = 'MZ59000100000011734194157';
 
@@ -1923,13 +1872,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Netherlands
-  it('Should validate a valid IBAN (Netherlands) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Netherlands)', () => {
     // Arrange
     const value = 'NL91ABNA0417164300';
 
@@ -1940,11 +1889,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Netherlands) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Netherlands)', () => {
     // Arrange
     const value = 'NL91ABNA0417164301';
 
@@ -1954,13 +1903,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Norway
-  it('Should validate a valid IBAN (Norway) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Norway)', () => {
     // Arrange
     const value = 'NO9386011117947';
 
@@ -1971,11 +1920,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Norway) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Norway)', () => {
     // Arrange
     const value = 'NO9386011117937';
 
@@ -1985,13 +1934,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Pakistan
-  it('Should validate a valid IBAN (Pakistan) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Pakistan)', () => {
     // Arrange
     const value = 'PK24SCBL0000001171495101';
 
@@ -2002,11 +1951,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Pakistan) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Pakistan)', () => {
     // Arrange
     const value = 'PK24SCBL0000101171495101';
 
@@ -2016,13 +1965,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Palestine
-  it('Should validate a valid IBAN (Palestine) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Palestine)', () => {
     // Arrange
     const value = 'PS92PALS000000000400123456702';
 
@@ -2033,11 +1982,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Palestine) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Palestine)', () => {
     // Arrange
     const value = 'PS92PALS000000000400122456702';
 
@@ -2047,13 +1996,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Poland
-  it('Should validate a valid IBAN (Poland) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Poland)', () => {
     // Arrange
     const value = 'PL27114020040000300201355387';
 
@@ -2064,11 +2013,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Poland) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Poland)', () => {
     // Arrange
     const value = 'PL23114020040000300201355387';
 
@@ -2078,13 +2027,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Portugal
-  it('Should validate a valid IBAN (Portugal) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Portugal)', () => {
     // Arrange
     const value = 'PT50000201231234567890154';
 
@@ -2095,11 +2044,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Portugal) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Portugal)', () => {
     // Arrange
     const value = 'PT50000201231234567890153';
 
@@ -2109,13 +2058,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Qatar
-  it('Should validate a valid IBAN (Qatar) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Qatar)', () => {
     // Arrange
     const value = 'QA58DOHB00001234567890ABCDEFG';
 
@@ -2126,11 +2075,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Qatar) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Qatar)', () => {
     // Arrange
     const value = 'QA58EOHB00001234567890ABCDEFG';
 
@@ -2140,15 +2089,12 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
-  // WATCH OUT !! THIS TWO TESTS ARE FAILING
-  // ** Republic of Kosovo
-
-  it('Should validate a valid IBAN (Republic of Kosovo) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Republic of Kosovo)', () => {
     // Arrange
 
     const value = 'XK051212012345678906';
@@ -2160,11 +2106,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a valid IBAN (Republic of Kosovo - second test) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Republic of Kosovo - second test)', () => {
     // Arrange
     const value = 'XK051000000000000053';
 
@@ -2175,11 +2121,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Republic of Kosovo) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Republic of Kosovo)', () => {
     // Arrange
     const value = 'XK051212012345678907';
 
@@ -2189,13 +2135,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Romania
-  it('Should validate a valid IBAN (Romania) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Romania)', () => {
     // Arrange
     const value = 'RO49AAAA1B31007593840000';
 
@@ -2206,11 +2152,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Romania) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Romania)', () => {
     // Arrange
     const value = 'RO49AABA1B31007593840000';
 
@@ -2220,13 +2166,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** San Marino
-  it('Should validate a valid IBAN (San Marino) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (San Marino)', () => {
     // Arrange
     const value = 'SM86U0322509800000000270100';
 
@@ -2237,11 +2183,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (San Marino) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (San Marino)', () => {
     // Arrange
     const value = 'SM86U0322509800000000275100';
 
@@ -2251,13 +2197,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Saudi Arabia
-  it('Should validate a valid IBAN (Saudi Arabia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Saudi Arabia)', () => {
     // Arrange
     const value = 'SA0380000000608010167519';
 
@@ -2268,11 +2214,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Saudi Arabia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Saudi Arabia)', () => {
     // Arrange
     const value = 'SA0380000000600010167519';
 
@@ -2282,13 +2228,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Senegal
-  it('Should validate a valid IBAN (Senegal) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Senegal)', () => {
     // Arrange
     const value = 'SN12K00100152000025690007542';
 
@@ -2299,11 +2245,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Senegal) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Senegal)', () => {
     // Arrange
     const value = 'SN12K00100152000025680007542';
 
@@ -2313,13 +2259,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Serbia
-  it('Should validate a valid IBAN (Serbia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Serbia)', () => {
     // Arrange
     const value = 'RS35260005601001611379';
 
@@ -2330,11 +2276,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Serbia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Serbia)', () => {
     // Arrange
     const value = 'RS35260005601101611379';
 
@@ -2344,13 +2290,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Slovakia
-  it('Should validate a valid IBAN (Slovakia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Slovakia)', () => {
     // Arrange
     const value = 'SK3112000000198742637541';
 
@@ -2361,11 +2307,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Slovakia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Slovakia)', () => {
     // Arrange
     const value = 'SK2112000000198742637541';
 
@@ -2375,13 +2321,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Slovenia
-  it('Should validate a valid IBAN (Slovenia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Slovenia)', () => {
     // Arrange
     const value = 'SI56191000000123438';
 
@@ -2392,11 +2338,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Slovenia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Slovenia)', () => {
     // Arrange
     const value = 'SI56191000000223438';
 
@@ -2406,13 +2352,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Spain
-  it('Should validate a valid IBAN (Spain) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Spain)', () => {
     // Arrange
     const value = 'ES7921000813610123456789';
 
@@ -2423,11 +2369,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Spain) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Spain)', () => {
     // Arrange
     const value = 'ES7921000813615123456789';
 
@@ -2437,13 +2383,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Sweden
-  it('Should validate a valid IBAN (Sweden) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Sweden)', () => {
     // Arrange
     const value = 'SE3550000000054910000003';
 
@@ -2454,11 +2400,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Sweden) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Sweden)', () => {
     // Arrange
     const value = 'SE3550000000154910000003';
 
@@ -2468,13 +2414,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Switzerland
-  it('Should validate a valid IBAN (Switzerland) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Switzerland)', () => {
     // Arrange
     const value = 'CH9300762011623852957';
 
@@ -2485,11 +2431,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Switzerland) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Switzerland)', () => {
     // Arrange
     const value = 'CH9300762011623852857';
 
@@ -2499,13 +2445,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Tunisia
-  it('Should validate a valid IBAN (Tunisia) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Tunisia)', () => {
     // Arrange
     const value = 'TN5914207207100707129648';
 
@@ -2516,11 +2462,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Tunisia) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Tunisia)', () => {
     // Arrange
     const value = 'TN5914207207100707329648';
 
@@ -2530,13 +2476,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Turkey
-  it('Should validate a valid IBAN (Turkey) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Turkey)', () => {
     // Arrange
     const value = 'TR330006100519786457841326';
 
@@ -2547,11 +2493,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Turkey) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Turkey)', () => {
     // Arrange
     const value = 'TR330006100519786557841326';
 
@@ -2561,13 +2507,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** United Arab Emirates
-  it('Should validate a valid IBAN (United Arab Emirates) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (United Arab Emirates)', () => {
     // Arrange
     const value = 'AE260211000000230064016';
 
@@ -2578,11 +2524,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (United Arab Emirates) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (United Arab Emirates)', () => {
     // Arrange
     const value = 'AE260261000000230064016';
 
@@ -2592,13 +2538,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** United Kingdom
-  it('Should validate a valid IBAN (United Kingdom) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (United Kingdom)', () => {
     // Arrange
     const value = 'GB29NWBK60161331926819';
 
@@ -2609,11 +2555,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (United Kingdom) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (United Kingdom)', () => {
     // Arrange
     const value = 'GB29NWBK60161331326819';
 
@@ -2623,13 +2569,13 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
   // ** Virgin Islands, British VG
-  it('Should validate a valid IBAN (Virgin Islands, British VG) and return valid', function() {
+  it('should return succeded validation when it feeds value equals valid IBAN from (Virgin Islands, British VG)', () => {
     // Arrange
     const value = 'VG96VPVG0000012345678901';
 
@@ -2640,11 +2586,11 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: true,
       message: '',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 
-  it('Should validate a non valid IBAN (Virgin Islands, British VG) and return error', function() {
+  it('should return failed validation when it feeds value equals invalid IBAN from (Virgin Islands, British VG)', () => {
     // Arrange
     const value = 'VG96VYVG0000012345678901';
 
@@ -2654,8 +2600,8 @@ describe('fonk-iban-validator specs', () => {
     // Assert
     expect(result).toEqual({
       succeeded: false,
-      message: 'Invalid IBAN',
-      type: 'IBAN',
+      message: defaultMessage,
+      type: VALIDATOR_TYPE,
     });
   });
 
@@ -2672,7 +2618,7 @@ describe('fonk-iban-validator specs', () => {
     expect(result).toEqual({
       succeeded: false,
       message: 'other message',
-      type: 'IBAN',
+      type: VALIDATOR_TYPE,
     });
   });
 });

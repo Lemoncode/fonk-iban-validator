@@ -6,9 +6,7 @@
 
 This is a [fonk](https://github.com/Lemoncode/fonk) microlibrary that brings validation capabilities to:
 
-// TODO: Update description and example.
-
-- Validate if a field of a form ....
+- Validate if a field of a form is a valid IBAN
 
 How to add it to an existing form validation schema:
 
@@ -16,8 +14,7 @@ We have the following form model:
 
 ```
 const myFormValues = {
-  product: 'shoes',
-  price: 20,
+  account: 'ES7921000813610123456789',
 }
 ```
 
@@ -28,7 +25,7 @@ import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema = {
   field: {
-    price: [iban.validator],
+    account: [iban.validator],
   },
 };
 ```
@@ -40,7 +37,7 @@ You can customize the error message displayed in two ways:
 ```javascript
 import { iban } from '@lemoncode/fonk-iban-validator';
 
-iban.setErrorMessage('El campo debe de ser numérico');
+iban.setErrorMessage('El campo debe tener un formato IBAN válido');
 ```
 
 - Locally just override the error message for this validationSchema:
@@ -50,10 +47,10 @@ import { iban } from '@lemoncode/fonk-iban-validator';
 
 const validationSchema = {
   field: {
-    price: [
+    account: [
       {
         validator: iban.validator,
-        message: 'Error message only updated for the validation schema',
+        message: 'Field should have a valid IBAN format',
       },
     ],
   },

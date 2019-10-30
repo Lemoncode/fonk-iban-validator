@@ -11,4 +11,3 @@ coverage/
 .rpt2_cache
 react-app-env.d.ts
 .cache
-*.spec.ts
