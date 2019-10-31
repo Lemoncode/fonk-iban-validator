@@ -63,7 +63,7 @@ const validationSchema = {
 };
 ```
 
-Please, refer to [fonk](https://github.com/Lemoncode/fonk) to know more.
+Please, refer to [fonk](https://github.com/Lemoncode/fonk) to learn more about form validation.
 
 ## License
 
