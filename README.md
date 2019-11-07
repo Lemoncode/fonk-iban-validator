@@ -8,6 +8,12 @@ This is a [fonk](https://github.com/Lemoncode/fonk) microlibrary that brings val
 
 - Validate if a field of a form is a valid IBAN
 
+How to install it:
+
+```bash
+npm install @lemoncode/fonk-iban-validator --save
+```
+
 How to add it to an existing form validation schema:
 
 We have the following form model:
@@ -57,7 +63,7 @@ const validationSchema = {
 };
 ```
 
-Please, refer to [fonk](https://github.com/Lemoncode/fonk) to know more.
+Please, refer to [fonk](https://github.com/Lemoncode/fonk) to learn more about form validation.
 
 ## License
 
